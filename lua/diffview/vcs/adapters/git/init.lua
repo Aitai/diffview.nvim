@@ -1611,6 +1611,11 @@ function GitAdapter:stage_index_file(file)
 
     vim.cmd("silent noautocmd keepalt '[,']write " .. temp)
 
+    pcall(function()
+      local content = vim.fn.readfile(temp)
+      vim.fn.writefile(content, file.absolute_path)
+    end)
+
     out, code = self:exec_sync(
       { "--literal-pathspecs", "hash-object", "-w", "--", pl:convert(temp) },
       self.ctx.toplevel
