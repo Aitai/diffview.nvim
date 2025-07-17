@@ -182,7 +182,9 @@ function DiffView:close()
       file:destroy()
     end
 
-    self.commit_log_panel:destroy()
+    if self.commit_log_panel then
+      self.commit_log_panel:destroy()
+    end
     DiffView.super_class.close(self)
   end
 end
